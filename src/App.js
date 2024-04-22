@@ -1,4 +1,4 @@
-import HandleRoute from "./component/HandRoute";
+import HandleRoute from "./Routes/Routes";
 function App() {
   return (
 <><HandleRoute/></>

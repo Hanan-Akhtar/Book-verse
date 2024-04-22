@@ -1,17 +1,10 @@
-import "../App.css";
-import { Link, useNavigate } from "react-router-dom";
-import * as React from 'react';
-import { TextField } from "@mui/material";
-import IconButton from '@mui/material/IconButton';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { TextField, Button, IconButton, FormControl, InputLabel, OutlinedInput, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { Button } from '@mui/material';
 import axios from 'axios';
-import { useState } from "react";
+import "./loginPages.css"
 
 const SignIn = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -23,7 +16,6 @@ const SignIn = () => {
     const [signInError, setSignInError] = useState('');
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
-
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -72,7 +64,6 @@ const SignIn = () => {
             } else {
                 console.error('Error fetching data:', response.statusText);
                 setSignInError('Invalid email or password.');
-
             }
         } catch (error) {
             console.error('Sign-in error:', error.response);
@@ -86,127 +77,69 @@ const SignIn = () => {
         }
     };
 
-
     return (
-        <>
-            <div className="row">
-                <div className="col-lg-7 d-flex " style={{ alignItems: "center" }}>
-                    <div className="container ">
-                        <div className="logo">
-                            <h3>Book verse</h3>
-                        </div>
-                        <div className="sign-in">
-                            <div>
-                                <div>
-                                    <h2>Sign in to your Book Verse account</h2>
-                                    <p>Don't have an account yet ? <Link className="links greenColor" to={"/signup"}>Sign up</Link></p>
-                                </div>
-                                <form onSubmit={handleSignIn}>
-                                    <div className="input-container">
-                                        <TextField
-                                            fullWidth
-                                            className="email"
-                                            error={!!emailError}
-                                            helperText={emailError}
-                                            sx={{
-                                                '& label.Mui-focused': {
-                                                    color: '#00A95A',
-                                                },
-                                                '& .MuiOutlinedInput-root': {
-                                                    '&.Mui-focused fieldset': {
-                                                        borderColor: '#00A95A',
-                                                    },
-                                                },
-                                            }}
-                                            id="outlined-basic"
-                                            label="Email"
-                                            type="email"
-                                            variant="outlined"
-                                            value={email}
-                                            onChange={(e) => {
-                                                setEmail(e.target.value);
-                                                setEmailError('');
-                                            }}
-                                        />
-
-                                    </div>
-                                    <div className="input-container">
-                                        <FormControl
-                                            fullWidth
-                                            sx={{
-                                                '& label.Mui-focused': {
-                                                    color: '#00A95A',
-                                                },
-                                                '& .MuiOutlinedInput-root': {
-                                                    '&.Mui-focused fieldset': {
-                                                        borderColor: '#00A95A',
-                                                    },
-                                                },
-                                            }}
-                                            variant="outlined"
-                                            error={!!passwordError}
-                                        >
-                                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                            <OutlinedInput
-                                                id="outlined-adornment-password"
-                                                type={showPassword ? 'text' : 'password'}
-                                                endAdornment={
-                                                    <InputAdornment position="end">
-                                                        <IconButton
-                                                            aria-label="toggle password visibility"
-                                                            onClick={handleClickShowPassword}
-                                                            onMouseDown={handleMouseDownPassword}
-                                                            edge="end"
-                                                        >
-                                                            {showPassword ?<Visibility />  :  <VisibilityOff />}
-                                                        </IconButton>
-                                                    </InputAdornment>
-                                                }
-                                                label="Password"
-                                                value={password}
-                                                onChange={(e) => {
-                                                    setPassword(e.target.value);
-                                                    setPasswordError('');
-                                                }}
-                                            />
-                                        </FormControl>
-                                    </div>
-                                    <Link to="/forgot" className="greenColor links forgot" >Forgot your password ?</Link>
-
-                                    {signInError && <p className="error-message">{signInError}</p>}
-                                    {passwordError && <p className="error-message">{passwordError}</p>}
-
-                                    <div className="d-flex justify-content-center">
-                                        {loading ? (
-                                            <div className="spinner-border text-success" role="status">
-                                                <span className="visually-hidden">Loading...</span>
-                                            </div>
-                                        ) : (
-                                            <Button
-                                                type="submit"
-                                                variant="contained"
-                                                fullWidth
-                                                sx={{
-                                                    backgroundColor: "#8E43F0",
-                                                    marginTop: "20px",
-                                                    '&:hover': {
-                                                        backgroundColor: "#8E43F0",
-                                                    },
-                                                }}
-                                            >
-                                                Sign in
-                                            </Button>
-                                        )}
-
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+        <div className="container">
+            <div className="row justify-content-center">
+                <div className="col-lg-6">
+                    <div className="text-center mb-4">
+                        <h1 className="h3 mb-3">Sign in to your BookVerse account</h1>
+                        <p>Don't have an account yet? <Link to="/signup">Sign up</Link></p>
                     </div>
+                    <form onSubmit={handleSignIn}>
+                        <TextField
+                            fullWidth
+                            className="mb-3"
+                            error={!!emailError}
+                            helperText={emailError}
+                            id="outlined-basic"
+                            label="Email"
+                            type="email"
+                            variant="outlined"
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                                setEmailError('');
+                            }}
+                        />
+                        <FormControl fullWidth variant="outlined" error={!!passwordError}>
+                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-password"
+                                type={showPassword ? 'text' : 'password'}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                                label="Password"
+                                value={password}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                    setPasswordError('');
+                                }}
+                            />
+                        </FormControl>
+                        <Link to="/forgot" className="d-block text-end mb-3">Forgot your password?</Link>
+                        {signInError && <p className="error-message mb-3">{signInError}</p>}
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            disabled={loading}
+                        >
+                            {loading ? 'Signing in...' : 'Sign in'}
+                        </Button>
+                    </form>
                 </div>
-                <div className="col-lg-5 background-image d-flex d-none d-lg-flex"></div>
             </div>
-        </>
+        </div>
     );
 }
 

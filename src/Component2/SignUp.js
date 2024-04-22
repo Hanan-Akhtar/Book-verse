@@ -9,12 +9,12 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CircleIcon from '@mui/icons-material/Circle';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import "./loginPages.css"
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
