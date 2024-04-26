@@ -63,7 +63,7 @@ const About = () => {
                 {/* Awards section strt here */}
                 <hr></hr>
                 <div className='row' style={{ marginBottom: "50px" }}>
-                    <div className='row' style={{ height: "200px" }}>
+                    <div className='row' >
                         <div className='col-lg-3 col-md-6 mb-4' style={{ height: "200px" }}>
                             <div className="box" >
                                 <img className="box-img" src={ultra} alt="Image 1" />

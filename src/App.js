@@ -1,7 +1,10 @@
 import HandleRoute from "./Routes/Routes";
+import { CartProvider } from "./component/CartContext";
 function App() {
   return (
-<><HandleRoute/></>
+    <CartProvider>
+      <HandleRoute />
+    </CartProvider>
   );
 }
 

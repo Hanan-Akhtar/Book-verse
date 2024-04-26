@@ -11,14 +11,14 @@ import hyper from '../images/hyper.png';
 import booksData from './data';
 import CustomDrawer from './CartDrawer';
 import Audiodata from './AudioData';
-// import Navbar from '../Footer-and-Nav/Nav.js'
+import { useContextApi } from './CartContext';
+
 
 
 const Home = () => {
 
-    const [cartItems, setCartItems] = useState([]);
+    const {cartItems, setCartItems,isCartOpen,setIsCartOpen}=useContextApi();
     const [totalPrice, setTotalPrice] = useState(0);
-    const [isCartOpen, setIsCartOpen] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
     const addToCart = (book) => {
         // Check if the item is already in the cart
@@ -48,11 +48,6 @@ const Home = () => {
     };
 
 
-
-
-
-
-
     const removeFromCart = (index) => {
         const newCartItems = [...cartItems];
         newCartItems.splice(index, 1);
@@ -61,6 +56,7 @@ const Home = () => {
     };
 
     const increaseQuantity = (index) => {
+        console.log(cartItems,"test")
         const newCartItems = [...cartItems];
         newCartItems[index].quantity++;
         setCartItems(newCartItems);
@@ -76,9 +72,12 @@ const Home = () => {
         }
     };
 
-    const calculateTotalPrice = (items) => {
-        const total = items.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
-        setTotalPrice(total);
+    const calculateTotalPrice = (cartItems) => {
+        let totalPrice = 0;
+        cartItems.forEach(item => {
+            totalPrice += item.price * item.quantity;
+        });
+        setTotalPrice(totalPrice);
     };
 
     const toggleCartDrawer = () => {
@@ -93,23 +92,22 @@ const Home = () => {
         <div>
             <div className='bg-light'>
                 <div className=' top-section'>
-                    {/* <Navbar setIsCartOpen={setIsCartOpen} />  */}
                     {/* banner section strt here */}
                     <div className='container banner' style={{ marginTop: "0px" }}>
                         <div className='row'>
-                            <div className='col-lg-7 top-heading'>
+                            <div className='col-lg-5 order-lg-last right-content'>
+                                <img className='img-fluid' alt='banner' src={banner} />
+                            </div>
+                            <div className='col-lg-7 order-lg-first top-heading'>
                                 <p className='color new-release'>NEW RELEASE</p>
                                 <h1>The Sons of the Empire</h1>
                                 <div className='col-lg-9 detail'>
                                     <p>Justo habitant at augue ac sed proin consectetur ac urna nisl elit nulla facilisis viverra dolor sagittis nisi risus egestas adipiscing nibh euismod.</p>
                                     <Stack spacing={2} direction="row">
-                                        <Button variant="contained" style={{ backgroundColor: '#8E43F0' }}>Buy Now</Button>
+                                        <Button variant="contained"  onClick={addToCart} style={{ backgroundColor: '#8E43F0' }}>Buy Now</Button>
                                         <Button variant="outlined" style={{ color: '#8E43F0' }}>Read Sample</Button>
                                     </Stack>
                                 </div>
-                            </div>
-                            <div className='col-lg-5 right-content'>
-                                <img className='img-fluid' alt='banner' src={banner} />
                             </div>
                         </div>
                     </div>
@@ -194,24 +192,26 @@ const Home = () => {
                         </div>
 
                         <div className='row selling-books'>
-                            {booksData.map((book) => (
-                                <div key={book.id} className='col-lg-3 col-md-6 mb-4'>
-                                    <div className="box">
-                                        <img className="box-img" src={book.image} alt={`Image ${book.id}`} style={{ width: "270px", height: "300px" }} />
-                                        <div className="box-body">
-                                            <h5 className="box-title">{book.name}</h5>
-                                            <p className="box-text">Author: {book.author}</p>
-                                            <p className="box-text">Price: {book.price}</p>
-                                            <Button
-                                                variant="contained"
-                                                style={{ backgroundColor: '#8E43F0' }}
-                                                onClick={() => addToCart(book)}
-                                            >
-                                                Add to Cart
-                                            </Button>
+                            {booksData.map((book, index) => (
+                                index < 4 && (
+                                    <div key={book.id} className='col-lg-3 col-md-6 mb-4'>
+                                        <div className="box">
+                                            <img className="box-img" src={book.image} alt={`Image ${book.id}`} style={{ width: "100%", height: "300px" }} />
+                                            <div className="box-body">
+                                                <h5 className="box-title">{book.name}</h5>
+                                                <p className="box-text">Author: {book.author}</p>
+                                                <p className="box-text">Price: {book.price}</p>
+                                                <Button
+                                                    variant="contained"
+                                                    style={{ backgroundColor: '#8E43F0' }}
+                                                    onClick={() => addToCart(book)}
+                                                >
+                                                    Add to Cart
+                                                </Button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                )
                             ))}
                         </div>
                         <div className='shop-all-books'>
@@ -229,7 +229,7 @@ const Home = () => {
                     removeFromCart={removeFromCart}
                     increaseQuantity={increaseQuantity}
                     decreaseQuantity={decreaseQuantity}
-                    selectedBook={selectedBook} // Pass the selected book item
+                    selectedBook={selectedBook}
                 />
 
                 {/* audio section strt here */}
@@ -249,7 +249,7 @@ const Home = () => {
                             {Audiodata.map((book) => (
                                 <div key={book.id} className='col-lg-3 col-md-6 mb-4'>
                                     <div className="box">
-                                        <img className="box-img" src={book.image} alt={`Image ${book.id}`} style={{ width: "270px", height: "300px" }} />
+                                        <img className="box-img" src={book.image} alt={`Image ${book.id}`} style={{ width: "100%", height: "300px" }} />
                                         <div className="box-body">
                                             <h5 className="box-title">{book.heading}</h5>
                                             <audio controls style={{ width: "100%", maxWidth: "270px" }}>
@@ -265,6 +265,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
+
     );
 }
 

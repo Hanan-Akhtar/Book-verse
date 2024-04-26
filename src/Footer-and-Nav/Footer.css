@@ -24,15 +24,25 @@
 }
 
 .footer-nav {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; 
 }
 
 .footer-nav li {
-    display: inline-block;
-    margin-right: 20px;
+    margin: 0 10px; 
+    text-align: center; 
 }
+
+@media (max-width: 768px) {
+    .footer-nav li {
+        flex: 0 0 100%; 
+        margin-bottom: 10px; 
+    }
+}
+
 
 .footer-nav li:last-child {
     margin-right: 0;

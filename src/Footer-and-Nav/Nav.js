@@ -1,35 +1,49 @@
+import React, { useState,useEffect,useContext } from 'react';
 import { ShoppingCart, Person, Search } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Nav.css';
+import { useContextApi } from '../component/CartContext';
 
-const Navbar = ({ setIsCartOpen }) => {
+const Navbar = () => {
+    const location = useLocation();
+    const {isCartOpen, setIsCartOpen}=useContextApi()
+    const [isBlogPage, setIsBlogPage] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(true); 
+
+
+    useEffect(() => {
+        setIsBlogPage(location.pathname === '/blog');
+    }, [location]);
+
+    const handleToggleCollapse = () => {
+        setIsCollapsed(!isCollapsed); 
+    };
+
     return (
         <>
-            {/* navbar section strt here */}
-            <nav className="navbar bg-light navbar-expand-lg navbar-light top-nav">
+            {/* navbar section start here */}
+            <nav className={`navbar bg-light navbar-expand-lg navbar-light ${isBlogPage ? 'bg-white' : 'bg-light'}`}>
                 <div className="container">
-                    <Link className="navbar-brand" href="#">BookVerse</Link>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
-                        aria-label="Toggle navigation">
+                    <Link className="navbar-brand" to="/">BookVerse</Link>
+                    <button className="navbar-toggler" type="button" onClick={handleToggleCollapse} aria-expanded={!isCollapsed}>
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="collapse navbar-collapse" id="navbarScroll">
+                    <div className={`collapse navbar-collapse ${isCollapsed ? '' : 'show'}`} id="navbarScroll">
                         <ul className="navbar-nav me-auto my-2 my-lg-0 mx-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link className="nav-link " aria-current="page" to="/">Home</Link>
+                                <Link className="nav-link" to="/" onClick={handleToggleCollapse}>Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" href="#">Books</Link>
+                                <Link className="nav-link" to="/books" onClick={handleToggleCollapse}>Books</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to="/about">About Author</Link>
+                                <Link className="nav-link" to="/about" onClick={handleToggleCollapse}>About Author</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" href="#">Blog</Link>
+                                <Link className="nav-link" to="/blog" onClick={handleToggleCollapse}>Blog</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" href="#">Contact</Link>
+                                <Link className="nav-link" to="/contact" onClick={handleToggleCollapse}>Contact</Link>
                             </li>
                         </ul>
                         <form className="d-flex">

@@ -7,19 +7,30 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { TableFooter } from '@mui/material';
+import { useContextApi } from './CartContext';
+import {  Close } from '@mui/icons-material';
+
 
 const CustomDrawer = ({
     cartItems,
     totalPrice,
-    isCartOpen,
     toggleCartDrawer,
     removeFromCart,
     increaseQuantity,
     decreaseQuantity
 }) => {
+    const { isCartOpen,setIsCartOpen } = useContextApi();
+
+    const handleCloseDrawer = () => {
+        setIsCartOpen(false)
+    };
+
     return (
         <Drawer anchor="right" open={isCartOpen} onClose={toggleCartDrawer}>
             <div style={{ width: 300 }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
+                    <button onClick={handleCloseDrawer} style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}><Close/></button>
+                </div>
                 <h2>Cart</h2>
                 <TableContainer>
                     <Table>
@@ -41,13 +52,15 @@ const CustomDrawer = ({
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <button onClick={() => decreaseQuantity(index)}>-</button>
+                                        <button style={{ backgroundColor: "white", border: "none" }} onClick={() => decreaseQuantity(index)}>-</button>
                                         {item.quantity}
-                                        <button onClick={() => increaseQuantity(index)}>+</button>
+                                        <button style={{ backgroundColor: "white", border: "none" }} onClick={() => increaseQuantity(index)}>+</button>
                                     </TableCell>
-                                    <TableCell>${item.price * item.quantity}</TableCell>
                                     <TableCell>
-                                        <button onClick={() => removeFromCart(index)}>Remove</button>
+                                        {item.price}
+                                    </TableCell>
+                                    <TableCell>
+                                        <button style={{ backgroundColor: "#8E43F0", color: "white", border: 'none' }} onClick={() => removeFromCart(index)}>Remove</button>
                                     </TableCell>
                                 </TableRow>
                             ))}

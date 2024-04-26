@@ -161,7 +161,6 @@ color: #8E43F0;
 }
 
 .animated-number {
-  margin-right: 20px;
   font-weight: bold;
   color:#565a61 ; 
   font-size: 48px;
@@ -201,4 +200,44 @@ line-height: 1.5;
 }
 .Releasing .top-text .date{
   margin-bottom: 30px;
+}
+
+/* books section start here  */
+.books{
+  background-image: url(../images//background.jpeg.png);
+}
+.books{
+  padding: 40px;
+}
+.books .top-row{
+  justify-content: center;
+}
+.books .top-row .top-text{
+  text-align: center;
+}
+.books .top-row .top-text h1{
+  line-height: 1.4em;
+  font-family: 'EB Garamond',serif;
+  font-weight: 500;
+  font-size: 5.5rem;
+  margin-bottom: 20px;
+}
+.books-section .top-heading h2{
+  font-family: 'EB Garamond',serif;
+  font-weight: 600;
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+.more-books .box{
+  height: 450px;
+}
+
+/* blog page strt here  */
+.blog .blog1-img{
+  margin-bottom: 30px;
+}
+.blog .entry-title{
+  margin-bottom: 10px;
+  font-size: 26px;
+  font-family: 'EB Garamond',serif;
 }
