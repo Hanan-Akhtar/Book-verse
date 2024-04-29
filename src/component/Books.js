@@ -5,10 +5,10 @@ import Button from '@mui/material/Button';
 import booksData from './data';
 import { useState } from 'react';
 import CustomDrawer from './CartDrawer';
+import { useContextApi } from './CartContext';
 const Books = () => {
-    const [cartItems, setCartItems] = useState([]);
+    const {cartItems, setCartItems,isCartOpen,setIsCartOpen}=useContextApi();
     const [totalPrice, setTotalPrice] = useState(0);
-    const [isCartOpen, setIsCartOpen] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
     const addToCart = (book) => {
         // Check if the item is already in the cart
@@ -158,7 +158,7 @@ const Books = () => {
                             removeFromCart={removeFromCart}
                             increaseQuantity={increaseQuantity}
                             decreaseQuantity={decreaseQuantity}
-                            selectedBook={selectedBook} // Pass the selected book item
+                            selectedBook={selectedBook} 
                         />
 
                     </div>
