@@ -12,55 +12,53 @@ import booksData from './data';
 import CustomDrawer from './CartDrawer';
 import Audiodata from './AudioData';
 import { useContextApi } from './CartContext';
-
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 const Home = () => {
-
-    const {cartItems, setCartItems,isCartOpen,setIsCartOpen}=useContextApi();
+    const { cartItems, setCartItems, isCartOpen, setIsCartOpen } = useContextApi();
     const [totalPrice, setTotalPrice] = useState(0);
-    const [selectedBook, setSelectedBook] = useState(null);
+    const [selectedBook, setSelectedBooks] = useState(null);
     const addToCart = (book) => {
-        // Check if the item is already in the cart
         const existingItemIndex = cartItems.findIndex(cartItem => cartItem.id === book.id);
 
         if (existingItemIndex !== -1) {
-            // If the item exists, increase its quantity
             const newCartItems = [...cartItems];
             newCartItems[existingItemIndex].quantity++;
-
-            // Update the state with the new cart items
             setCartItems(newCartItems);
         } else {
-            // If the item does not exist, add it to the cart with quantity 1
-            const newItem = { ...book, quantity: 1 }; // Use the entire book object
+            const newItem = { ...book, quantity: 1 };
             const updatedCartItems = [...cartItems, newItem];
-
-            // Update the state with the new cart items
             setCartItems(updatedCartItems);
         }
 
-        // Calculate total price after the state update
-        calculateTotalPrice(cartItems);
+        // Update local storage
+        const updatedCartItems = localStorage.getItem('cartItems')
+            ? JSON.parse(localStorage.getItem('cartItems'))
+            : [];
+        const updatedItemIndex = updatedCartItems.findIndex(item => item.id === book.id);
+        if (updatedItemIndex !== -1) {
+            updatedCartItems[updatedItemIndex].quantity++;
+        } else {
+            updatedCartItems.push({ ...book, quantity: 1 });
+        }
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
 
-        // Open the cart drawer
         setIsCartOpen(true);
     };
-
 
     const removeFromCart = (index) => {
         const newCartItems = [...cartItems];
         newCartItems.splice(index, 1);
         setCartItems(newCartItems);
-        calculateTotalPrice(newCartItems);
     };
 
     const increaseQuantity = (index) => {
-        console.log(cartItems,"test")
         const newCartItems = [...cartItems];
         newCartItems[index].quantity++;
         setCartItems(newCartItems);
-        calculateTotalPrice(newCartItems);
+        calculateTotalPrice(newCartItems); 
     };
 
     const decreaseQuantity = (index) => {
@@ -68,7 +66,7 @@ const Home = () => {
         if (newCartItems[index].quantity > 1) {
             newCartItems[index].quantity--;
             setCartItems(newCartItems);
-            calculateTotalPrice(newCartItems);
+            calculateTotalPrice(newCartItems); 
         }
     };
 
@@ -84,7 +82,7 @@ const Home = () => {
         setIsCartOpen(!isCartOpen);
     };
 
-
+    
 
 
 
@@ -104,7 +102,7 @@ const Home = () => {
                                 <div className='col-lg-9 detail'>
                                     <p>Justo habitant at augue ac sed proin consectetur ac urna nisl elit nulla facilisis viverra dolor sagittis nisi risus egestas adipiscing nibh euismod.</p>
                                     <Stack spacing={2} direction="row">
-                                        <Button variant="contained"  onClick={addToCart} style={{ backgroundColor: '#8E43F0' }}>Buy Now</Button>
+                                        <Button variant="contained" onClick={addToCart} style={{ backgroundColor: '#8E43F0' }}>Buy Now</Button>
                                         <Button variant="outlined" style={{ color: '#8E43F0' }}>Read Sample</Button>
                                     </Stack>
                                 </div>
@@ -137,47 +135,47 @@ const Home = () => {
 
                         {/* Awards section strt here */}
 
-                        <div className='row'>
-                            <div className='row'>
-                                <div className='col-lg-3 col-md-6 mb-4'>
-                                    <div className="box">
-                                        <img className="box-img" src={ultra} alt="Image 1" />
-                                        <div className="box-body">
-                                            <h5 className="box-title">Best Author Awards 2012</h5>
-                                            <p className="box-text">Arcu pellentesque nisi consectetur netus aenean metus sit mattis sit sed.</p>
-                                        </div>
-                                    </div>
+                        <div className='row' style={{ marginBottom: "50px" }}>
+                    <div className='row' >
+                        <div className='col-lg-3 col-md-6 mb-4' style={{ height: "200px" }}>
+                            <div className="box" >
+                                <img className="box-img" src={ultra} alt="Image 1" />
+                                <div className="box-body">
+                                    <h5 className="box-title">Best Author Awards 2012</h5>
+                                    <p className="box-text">Arcu pellentesque nisi consectetur netus aenean metus sit mattis sit sed.</p>
                                 </div>
-                                <div className='col-lg-3 col-md-6 mb-4'>
-                                    <div className="box">
-                                        <img className="box-img" src={mega} alt="Image 2" />
-                                        <div className="box-body">
-                                            <h5 className="box-title">World's #1 Best-selling Book</h5>
-                                            <p className="box-text">Diam nibh non in enim nunc suscipit risus, adipiscing aenean quisque viverra.</p>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div className='col-lg-3 col-md-6 mb-4' style={{ height: "200px" }}>
+                            <div className="box">
+                                <img className="box-img" src={mega} alt="Image 2" />
+                                <div className="box-body">
+                                    <h5 className="box-title">World's #1 Best-selling Book</h5>
+                                    <p className="box-text">Diam nibh non in enim nunc suscipit risus, adipiscing aenean quisque viverra.</p>
                                 </div>
-                                <div className='col-lg-3 col-md-6 mb-4'>
-                                    <div className="box">
-                                        <img className="box-img" src={hyper} alt="Image 3" />
-                                        <div className="box-body">
-                                            <h5 className="box-title">NYT Best-selling Author 2014</h5>
-                                            <p className="box-text">Urna donec dolor bibendum lectus arcu purus eget nisl, ut nisl vitae.</p>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div className='col-lg-3 col-md-6 mb-4' style={{ height: "200px" }}>
+                            <div className="box">
+                                <img className="box-img" src={hyper} alt="Image 3" />
+                                <div className="box-body">
+                                    <h5 className="box-title">NYT Best-selling Author 2014</h5>
+                                    <p className="box-text">Urna donec dolor bibendum lectus arcu purus eget nisl, ut nisl vitae.</p>
                                 </div>
-                                <div className='col-lg-3 col-md-6 mb-4'>
-                                    <div className="box">
-                                        <img className="box-img" src={ultimate} alt="Image 4" />
-                                        <div className="box-body">
-                                            <h5 className="box-title">Best Author Awards 2018</h5>
-                                            <p className="box-text">Morbi odio sodales et facilisis mi nibh fringilla quis risus ultricies facilisis.</p>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div className='col-lg-3 col-md-6 mb-4' style={{ height: "200px" }}>
+                            <div className="box">
+                                <img className="box-img" src={ultimate} alt="Image 4" style={{ width: "60px", height: "60px", marginBottom: "21px" }} />
+                                <div className="box-body">
+                                    <h5 className="box-title">Best Author Awards 2018</h5>
+                                    <p className="box-text">Morbi odio sodales et facilisis mi nibh fringilla quis risus ultricies facilisis.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
                 </div>
                 {/* best selling books section strt here */}
                 <div >
@@ -215,7 +213,7 @@ const Home = () => {
                             ))}
                         </div>
                         <div className='shop-all-books'>
-                            <Button variant="outlined" style={{ color: '#8E43F0', }}>Shop All Books</Button>
+                            <Link to="/books"><Button variant="outlined" style={{ color: '#8E43F0', }}>Shop All Books</Button></Link>
                         </div>
 
                     </div>
@@ -229,8 +227,9 @@ const Home = () => {
                     removeFromCart={removeFromCart}
                     increaseQuantity={increaseQuantity}
                     decreaseQuantity={decreaseQuantity}
-                    selectedBook={selectedBook}
+                    calculateTotalPrice={calculateTotalPrice} 
                 />
+
 
                 {/* audio section strt here */}
 

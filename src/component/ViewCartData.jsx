@@ -1,5 +1,4 @@
 import React from 'react';
-import Drawer from '@mui/material/Drawer';
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,38 +8,28 @@ import TableRow from '@mui/material/TableRow';
 import { TableFooter } from '@mui/material';
 import { useContextApi } from './CartContext';
 import { Close } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
 
-const CustomDrawer = ({
+const ViewCartData = ({
     cartItems,
-    toggleCartDrawer,
     calculateTotalPrice,
     removeFromCart,
     increaseQuantity,
     decreaseQuantity
 }) => {
-    const Navigate=useNavigate()
     const { isCartOpen, setIsCartOpen } = useContextApi();
 
-    const handleCloseDrawer = () => {
-        setIsCartOpen(false)
-    };
+    
 
     const handleContinueShopping = () => {
         // Implement your continue shopping logic here
     };
 
-    const handleViewCart = () => {
-        Navigate('/viewCart');
-    };
+    
 
     return (
-        <Drawer anchor="right" open={isCartOpen} onClose={toggleCartDrawer}>
-            <div style={{ width: 300 }}>
-                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
-                    <button onClick={handleCloseDrawer} style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}><Close /></button>
-                </div>
-                <h2>Cart</h2>
+        <>
+            <div style={{ width: '100%', textAlign: 'center' }}>
+                <h2>View Cart</h2>
                 <TableContainer>
                     <Table>
                         <TableHead>
@@ -83,14 +72,12 @@ const CustomDrawer = ({
                         </TableFooter>
                     </Table>
                 </TableContainer>
-                <div style={{ position: 'absolute', bottom: 0,width: '100%',  textAlign: 'center' }}>
-                    <div>
-                        <button onClick={handleContinueShopping} style={{width: '100%', backgroundColor: '#007bff', color: 'white', border: 'none', padding: '10px', cursor: 'pointer' }}>Continue Shopping</button>
-                    </div>
-                    <button onClick={handleViewCart} style={{width: '100%', backgroundColor: '#8E43F0', color: 'white', border: 'none', padding: '10px', cursor: 'pointer' }}>View Cart</button>
-                </div>
+
             </div>
-        </Drawer>
+            <div>
+                <button onClick={handleContinueShopping} style={{marginTop:"30px", backgroundColor: '#007bff', color: 'white', border: 'none', padding: '10px', cursor: 'pointer' }}>Continue Shopping</button>
+            </div>
+        </>
     );
 }
-export default CustomDrawer;
+export default ViewCartData;

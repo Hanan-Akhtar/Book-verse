@@ -6,6 +6,8 @@ import SignIn from '../Component2/SignIn';
 import SignUp from '../Component2/SignUp';
 import Books from '../component/Books';
 import Blog from '../component/blog';
+import ViewCart from '../component/ViewCart';
+import Contact from '../component/Contact';
 
 
 const HandleRoute = () => {
@@ -17,6 +19,8 @@ const HandleRoute = () => {
                     <Route path='/about' element={<About />} />
                     <Route path='/books' element={<Books />} />
                     <Route path='/blog' element={<Blog />} />
+                    <Route path='/contact' element={<Contact />} />
+                    <Route path='/viewCart' element={<ViewCart />} />
 
                 </Route>
                 <Route path="/signIn" element={<SignIn/>}/>

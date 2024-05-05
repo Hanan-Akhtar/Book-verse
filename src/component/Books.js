@@ -159,6 +159,7 @@ const Books = () => {
                             increaseQuantity={increaseQuantity}
                             decreaseQuantity={decreaseQuantity}
                             selectedBook={selectedBook} 
+                            calculateTotalPrice={calculateTotalPrice}
                         />
 
                     </div>

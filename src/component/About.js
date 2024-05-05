@@ -5,10 +5,55 @@ import ultimate from '../images/ultimate.png'
 import ultra from '../images/Ultra.png'
 import mega from '../images/mega.jpeg.png'
 import hyper from '../images/hyper.png'
+import { useContextApi } from './CartContext'
+import { useEffect ,useState} from 'react'
+import CustomDrawer from './CartDrawer'
 const About = () => {
+    const { cartItems, setCartItems, isCartOpen, setIsCartOpen } = useContextApi();
+    const [selectedBook, setSelectedBooks] = useState(null);
+    const [totalPrice, setTotalPrice] = useState(0);
+
+
+    const increaseQuantity = (index) => {
+        const newCartItems = [...cartItems];
+        newCartItems[index].quantity++;
+        setCartItems(newCartItems);
+        calculateTotalPrice(newCartItems); 
+    };
+    const removeFromCart = (index) => {
+        const newCartItems = [...cartItems];
+        newCartItems.splice(index, 1);
+        setCartItems(newCartItems);
+    };
+
+    const decreaseQuantity = (index) => {
+        const newCartItems = [...cartItems];
+        if (newCartItems[index].quantity > 1) {
+            newCartItems[index].quantity--;
+            setCartItems(newCartItems);
+            calculateTotalPrice(newCartItems); 
+        }
+    };
+
+    const calculateTotalPrice = (cartItems) => {
+        let totalPrice = 0;
+        cartItems.forEach(item => {
+            totalPrice += item.price * item.quantity;
+        });
+        setTotalPrice(totalPrice);
+    };
+
+    const toggleCartDrawer = () => {
+        setIsCartOpen(!isCartOpen);
+    };
+
+    // Calculate total price on initial render
+    useEffect(() => {
+        calculateTotalPrice(cartItems);
+    }, [cartItems]);
     return (<>
         <div className=" bg-light">
-            <div className='container' style={{marginTop:"0px",paddingTop:"60px"}}>
+            <div className='container' style={{ marginTop: "0px", paddingTop: "60px" }}>
                 <div className='About-author'>
                     <div class=" p-100">
                         <div class="row  top-row">
@@ -18,7 +63,18 @@ const About = () => {
                             </div>
                         </div>
                     </div>
-
+                    {/* Cart Drawer */}
+                    <CustomDrawer
+                        cartItems={cartItems}
+                        totalPrice={totalPrice}
+                        isCartOpen={isCartOpen}
+                        toggleCartDrawer={toggleCartDrawer}
+                        removeFromCart={removeFromCart}
+                        increaseQuantity={increaseQuantity}
+                        decreaseQuantity={decreaseQuantity}
+                        selectedBook={selectedBook}
+                        calculateTotalPrice={calculateTotalPrice}
+                    />
                     <div className='row'>
                         <div className='col-lg-3 col-md-6 mb-4 about-img'>
                             <img className='img-fluid' alt='about-img' src={aboutimg} />

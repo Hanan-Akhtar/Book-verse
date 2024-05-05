@@ -241,3 +241,44 @@ line-height: 1.5;
   font-size: 26px;
   font-family: 'EB Garamond',serif;
 }
+
+/* contact page strt here */
+.contact{
+  padding-top: 100px;
+}
+.contact .top-row{
+  justify-content: center;
+}
+.contact .top-row .top-text{
+  text-align: center;
+}
+.contact .top-row .top-text h1{
+  line-height: 1.4em;
+  font-family: 'EB Garamond',serif;
+  font-weight: 500;
+  font-size: 5.5rem;
+  margin-bottom: 20px;
+}
+.send-messege h1{
+  margin-bottom: 30px;
+  font-family: 'EB Garamond',serif;
+  font-weight: 600;
+  font-size: 3rem;
+}
+.send-messege p{
+  margin-bottom: 50px;
+}
+.contact-form{
+  margin-bottom: 50px;
+}
+.contact-form .form-group{
+  margin-bottom: 20px;
+  border-radius: 0px;
+}
+.contact-form .form-control {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+}
+
