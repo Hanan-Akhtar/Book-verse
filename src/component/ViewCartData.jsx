@@ -8,20 +8,21 @@ import TableRow from '@mui/material/TableRow';
 import { TableFooter } from '@mui/material';
 import { useContextApi } from './CartContext';
 import { Close } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const ViewCartData = ({
     cartItems,
-    calculateTotalPrice,
     removeFromCart,
+    totalPrice,
     increaseQuantity,
     decreaseQuantity
 }) => {
     const { isCartOpen, setIsCartOpen } = useContextApi();
 
-    
+    const Navigate=useNavigate();
 
     const handleContinueShopping = () => {
-        // Implement your continue shopping logic here
+        Navigate("/books")
     };
 
     
@@ -55,7 +56,7 @@ const ViewCartData = ({
                                         <button style={{ backgroundColor: "white", border: "none" }} onClick={() => increaseQuantity(index)}>+</button>
                                     </TableCell>
                                     <TableCell>
-                                        {item.price}
+                                        {item.price*item.quantity}
                                     </TableCell>
                                     <TableCell>
                                         <button style={{ backgroundColor: "#8E43F0", color: "white", border: 'none' }} onClick={() => removeFromCart(index)}>Remove</button>
@@ -66,7 +67,7 @@ const ViewCartData = ({
                         <TableFooter>
                             <TableRow>
                                 <TableCell colSpan={2}>Total Price:</TableCell>
-                                <TableCell>${calculateTotalPrice(cartItems)}</TableCell>
+                                <TableCell>${totalPrice}</TableCell>
                                 <TableCell></TableCell>
                             </TableRow>
                         </TableFooter>

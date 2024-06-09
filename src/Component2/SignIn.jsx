@@ -83,7 +83,7 @@ const SignIn = () => {
                 <div className="col-lg-6">
                     <div className="text-center mb-4">
                         <h1 className="h3 mb-3">Sign in to your BookVerse account</h1>
-                        <p>Don't have an account yet? <Link to="/signup">Sign up</Link></p>
+                        <p>Don't have an account yet? <Link style={{textDecoration:"none",color:"#8E43F0"}} to="/signup">Sign up</Link></p>
                     </div>
                     <form onSubmit={handleSignIn}>
                         <TextField
@@ -126,7 +126,7 @@ const SignIn = () => {
                                 }}
                             />
                         </FormControl>
-                        <Link to="/forgot" className="d-block text-end mb-3">Forgot your password?</Link>
+                        <Link to="/forgot" style={{textDecoration:"none",color:"#8E43F0"}} className="d-block text-end mb-3">Forgot your password?</Link>
                         {signInError && <p className="error-message mb-3">{signInError}</p>}
                         <Button
                             type="submit"

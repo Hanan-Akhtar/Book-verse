@@ -13,32 +13,34 @@ import { useNavigate } from 'react-router-dom';
 
 const CustomDrawer = ({
     cartItems,
+    totalPrice,
     toggleCartDrawer,
-    calculateTotalPrice,
     removeFromCart,
     increaseQuantity,
     decreaseQuantity
 }) => {
-    const Navigate=useNavigate()
+    const navigate = useNavigate();
     const { isCartOpen, setIsCartOpen } = useContextApi();
 
     const handleCloseDrawer = () => {
-        setIsCartOpen(false)
+        setIsCartOpen(false);
     };
 
     const handleContinueShopping = () => {
-        // Implement your continue shopping logic here
+        navigate('/books');
     };
 
     const handleViewCart = () => {
-        Navigate('/viewCart');
+        navigate('/viewCart');
     };
 
     return (
         <Drawer anchor="right" open={isCartOpen} onClose={toggleCartDrawer}>
             <div style={{ width: 300 }}>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
-                    <button onClick={handleCloseDrawer} style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}><Close /></button>
+                    <button onClick={handleCloseDrawer} style={{ backgroundColor: 'transparent', border: 'none', cursor: 'pointer' }}>
+                        <Close />
+                    </button>
                 </div>
                 <h2>Cart</h2>
                 <TableContainer>
@@ -61,15 +63,21 @@ const CustomDrawer = ({
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <button style={{ backgroundColor: "white", border: "none" }} onClick={() => decreaseQuantity(index)}>-</button>
+                                        <button style={{ backgroundColor: 'white', border: 'none' }} onClick={() => decreaseQuantity(index)}>
+                                            -
+                                        </button>
                                         {item.quantity}
-                                        <button style={{ backgroundColor: "white", border: "none" }} onClick={() => increaseQuantity(index)}>+</button>
+                                        <button style={{ backgroundColor: 'white', border: 'none' }} onClick={() => increaseQuantity(index)}>
+                                            +
+                                        </button>
                                     </TableCell>
                                     <TableCell>
-                                        {item.price}
+                                        ${item.price * item.quantity}
                                     </TableCell>
                                     <TableCell>
-                                        <button style={{ backgroundColor: "#8E43F0", color: "white", border: 'none' }} onClick={() => removeFromCart(index)}>Remove</button>
+                                        <button style={{ backgroundColor: '#8E43F0', color: 'white', border: 'none' }} onClick={() => removeFromCart(index)}>
+                                            Remove
+                                        </button>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -77,20 +85,25 @@ const CustomDrawer = ({
                         <TableFooter>
                             <TableRow>
                                 <TableCell colSpan={2}>Total Price:</TableCell>
-                                <TableCell>${calculateTotalPrice(cartItems)}</TableCell>
+                                <TableCell>${totalPrice}</TableCell>
                                 <TableCell></TableCell>
                             </TableRow>
                         </TableFooter>
                     </Table>
                 </TableContainer>
-                <div style={{ position: 'absolute', bottom: 0,width: '100%',  textAlign: 'center' }}>
+                <div style={{ position: 'absolute', bottom: 0, width: '100%', textAlign: 'center' }}>
                     <div>
-                        <button onClick={handleContinueShopping} style={{width: '100%', backgroundColor: '#007bff', color: 'white', border: 'none', padding: '10px', cursor: 'pointer' }}>Continue Shopping</button>
+                        <button onClick={handleContinueShopping} style={{ width: '100%', backgroundColor: '#007bff', color: 'white', border: 'none', padding: '10px', cursor: 'pointer' }}>
+                            Continue Shopping
+                        </button>
                     </div>
-                    <button onClick={handleViewCart} style={{width: '100%', backgroundColor: '#8E43F0', color: 'white', border: 'none', padding: '10px', cursor: 'pointer' }}>View Cart</button>
+                    <button onClick={handleViewCart} style={{ width: '100%', backgroundColor: '#8E43F0', color: 'white', border: 'none', padding: '10px', cursor: 'pointer' }}>
+                        View Cart
+                    </button>
                 </div>
             </div>
         </Drawer>
     );
-}
+};
+
 export default CustomDrawer;

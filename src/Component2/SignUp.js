@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import "./loginPages.css"
+import img from '../images/banner.jpeg'
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -37,7 +38,7 @@ const SignUp = () => {
         password: ''
     });
     const [successMessage, setSuccessMessage] = useState('');
-    const [loading, setLoading] = useState(false); // State for loader
+    const [loading, setLoading] = useState(false); 
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -67,7 +68,7 @@ const SignUp = () => {
 
     const handleSignUp = async (event) => {
         event.preventDefault();
-        setLoading(true); // Set loading to true when sign-up process starts
+        setLoading(true); 
         const { firstName, lastName, email, password } = formData;
         const newErrors = { firstName: '', lastName: '', email: '', password: '' };
 
@@ -89,7 +90,7 @@ const SignUp = () => {
 
         if (Object.values(newErrors).some((error) => error !== '')) {
             setErrors(newErrors);
-            setLoading(false); // Set loading to false if there are validation errors
+            setLoading(false); 
             return;
         }
 
@@ -129,7 +130,7 @@ const SignUp = () => {
                 setErrors({ ...newErrors, general: 'An unexpected error occurred. Please try again later.' });
             }
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
     };
 
@@ -137,10 +138,10 @@ const SignUp = () => {
 
 
     return (
-
-        <div className="row">
+        <div className='container'>
+              <div className="row">
             <div className="col-lg-7 d-flex align-items-center">
-                <div className='container'>
+                <div>
                     <h3>Book verse</h3>
                     <div className="sign-up" >
                         <div>
@@ -247,7 +248,7 @@ const SignUp = () => {
                                                         onMouseDown={handleMouseDownPassword}
                                                         edge="end"
                                                     >
-                                                        {showPassword ?  <Visibility /> : <VisibilityOff />}
+                                                        {showPassword ? <Visibility /> : <VisibilityOff />}
                                                     </IconButton>
                                                 </InputAdornment>
                                             }
@@ -331,59 +332,14 @@ const SignUp = () => {
                     </div>
                 </div>
             </div>
-            {/* <div className="col-lg-5 Advance-feature d-flex d-none d-lg-flex">
-                <div className="container">
-                    <h2>Try Advanced feature htmlFor 30 days</h2>
-                    <p>Your 30 days trial for advance feature include:</p>
-                    <div>
-                        <ul>
-                            <div style={{ marginBottom: '35px' }}>
-                                <li className='li-headings'>
-                                    <div style={{ display: "flex", alignItems: "center" }}>
-                                        <span style={{ marginRight: "8px" }}><CheckCircleIcon /></span>
-                                        <h6>Access to premium feature</h6>
-                                    </div>
-                                </li>
-                                <li>
-                                    <p>Live chat,template library,auto resend, propotion pop-ups,Al writing assistant and more</p>
-                                </li>
-                            </div>
-                            <div style={{ marginBottom: "35px" }}>
-                                <li className='li-headings'><div style={{ display: "flex", alignItems: "center" }}>
-                                    <span style={{ marginRight: "8px" }}><CheckCircleIcon /></span>
-                                    <h6>Access to main feature</h6>
-                                </div></li>
-                                <li><p>Email automation , landing pages, website builder and more </p></li>
-                            </div>
-
-                            <li className='li-headings' style={{ marginBottom: "20px" }}><div style={{ display: "flex", alignItems: "center" }}>
-                                <span style={{ marginRight: "8px" }}><CheckCircleIcon /></span>
-                                <h6>Up to 1,000 subscribers</h6>
-                            </div>
-                            </li>
-                            <li className='li-headings' style={{ marginBottom: "20px" }}><div style={{ display: "flex", alignItems: "center" }}>
-                                <span style={{ marginRight: "8px" }}><CheckCircleIcon /></span>
-                                <h6>Send up to 12,000 emails per month</h6>
-                            </div>
-                            </li>
-                            <li className='li-headings' style={{ marginBottom: "20px" }}><div style={{ display: "flex", alignItems: "center" }}>
-                                <span style={{ marginRight: "8px" }}><CheckCircleIcon /></span>
-                                <h6>24/7 live chat support</h6>
-                            </div>
-                            </li>
-                            <li className='li-headings' style={{ marginBottom: "20px" }}><div style={{ display: "flex", alignItems: "center" }}>
-                                <span style={{ marginRight: "8px" }}><CheckCircleIcon /></span>
-                                <h6>Upgragde any time</h6>
-                            </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div> */}
-
+            <div className="col-lg-5  d-flex d-none d-lg-flex">
+                <img src={img} alt='img'/>
+            </div>
 
         </div>
+        </div>
+
+      
     );
 }
 
